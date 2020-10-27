@@ -1,0 +1,14 @@
+name: Schedule action
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-lasest
+    steps: 
+      - uses: actions/checkout@v1
+        with:
+          ref: feat/ci-scheduler
+
