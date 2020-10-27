@@ -1,8 +1,8 @@
 name: Schedule action
 
-on:
-  schedule:
-    - cron: '*/10 * * * *'
+#on:
+#  schedule:
+#    - cron: '*/10 * * * *'
 
 jobs:
   build:
