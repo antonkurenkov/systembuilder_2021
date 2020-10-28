@@ -1,0 +1,13 @@
+name: FirstStep
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Python Version
+        run: python --version
