@@ -1,4 +1,4 @@
-name: scheduler
+name: scheduler-python-version
 on:
   schedule:
     - cron: '*/10 * * * *'
@@ -7,6 +7,6 @@ jobs:
   schedule_action:
     runs-on: ubuntu-latest
     steps:
-      - name: python version
+      - name: Print python version
         run: python --version
         
