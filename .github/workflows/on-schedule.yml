@@ -1,4 +1,4 @@
-name: scheduler-python-version
+name: scheduler
 on:
   schedule:
     - cron: '*/10 * * * *'
