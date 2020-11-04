@@ -1,5 +1,5 @@
-class builder:
+class Builder:
 
-    def parse(self):
+    def Parse(self):
         pass
     
