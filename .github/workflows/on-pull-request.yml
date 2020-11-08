@@ -1,0 +1,13 @@
+name: on-pull-request
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print python version
+        run: python --version
