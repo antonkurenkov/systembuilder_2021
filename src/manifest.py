@@ -11,7 +11,7 @@ class Manifest:
 
     def validate(self):
         with open(self.path) as file:
-            data = yaml.full_load(file)
+            data = yaml.safe_load(file)
 
         # с помощью dict создаю копию словаря
         data_dict = dict(data)
