@@ -1,5 +1,3 @@
-
 class Manifest:
-
-    def parse(self):
-        pass
+    def __init__ (self, path):
+        self.path = path
