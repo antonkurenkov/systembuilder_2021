@@ -6,4 +6,4 @@ class Builder:
     сборка образов docker
 
     '''
-        
+    pass  
