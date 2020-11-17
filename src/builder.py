@@ -1,9 +1,10 @@
 class Builder:
-    def build(self):
-    '''
-    Заготовка функции, которая будет отвечать
-    за вызов дочернего процесса, в котором будет осуществляться
-    сборка образов docker
+  
+    def __init__(self, path):
+        self.path = path
 
-    '''
-    pass  
+    def build(self):
+        pass
+        
+    def parse(self):
+        pass
