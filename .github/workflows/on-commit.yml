@@ -3,10 +3,12 @@ on:
     branches:
     - feat/ci-on-commit
 
-  python-vers:
-    name: Python version
+
+jobs:
+  python-version:
+    name: example
     runs-on: ubuntu-latest
     steps:
-      - name: Running script on python
+      - name: Running example
         run: |
           python --version
