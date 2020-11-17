@@ -1,3 +1,5 @@
+name: on-commit
+
 on:
   push:
     branches:
