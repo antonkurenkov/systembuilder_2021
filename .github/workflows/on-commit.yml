@@ -1,14 +1,12 @@
-name: Commit-Action
-
 on:
   push:
     branches:
     - feat/ci-on-commit
 
-jobs:
-  print-vers:
+  python-vers:
+    name: Python version
     runs-on: ubuntu-latest
-
     steps:
-    - name: Print Python Version
-      run : python --version 
+      - name: Running script on python
+        run: |
+          python --version
