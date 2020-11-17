@@ -1,10 +1,8 @@
-name: On-commit
-
 on:
   push:
     branches:
-      - feat/ci-on-commit
-jobs:
+    - feat/ci-on-commit
+
   python-vers:
     name: Python version
     runs-on: ubuntu-latest
