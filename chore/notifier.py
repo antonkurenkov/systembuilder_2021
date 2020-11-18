@@ -39,6 +39,7 @@ class Parser:
                             f'{self.current_branch}/status.json')
         return self.file.json()
 
+
 class Notifier(Parser):
 
     def __init__(self):
