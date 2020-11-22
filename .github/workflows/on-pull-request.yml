@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: print python version
         run: python --version
+      - uses: actions/checkout@v2
       - name: Running builder.py
         uses: actions/setup-python@v2
         with:
