@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - develop
+      - feat/ci-builder
 
 jobs:
   action:
@@ -11,3 +12,8 @@ jobs:
     steps:
       - name: print python version
         run: python --version
+      - name: Running builder.py
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - run: python ./src/builder.py
