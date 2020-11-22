@@ -8,7 +8,6 @@ on:
       - feat/ci-builder
 jobs:
   python-vers:
-    name: Python version
     runs-on: ubuntu-latest
     steps:
       - name: Running script on python
