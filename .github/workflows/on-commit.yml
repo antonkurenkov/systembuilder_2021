@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feat/ci-on-commit
+      - develop
+      - feat/ci-builder
 jobs:
   python-vers:
     name: Python version
@@ -12,3 +14,8 @@ jobs:
       - name: Running script on python
         run: |
           python --version
+      - name: Running builder.py
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - run: python ./src/builder.py
