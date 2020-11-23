@@ -6,6 +6,7 @@ import telebot
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
+
 class Parser:
 
     def __init__(self):
