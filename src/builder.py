@@ -14,4 +14,5 @@ class Builder:
 
         return self.collection
 
-
+    def build(self):
+        pass
