@@ -54,7 +54,6 @@ class Notifier(Parser):
 
     def prepare(self):
         self.final_string = f"""{self.commit_id}\n{self.author_name}\n{self.commit_message.strip()}"""
-
         return self.final_string
 
     def send_message(self):
