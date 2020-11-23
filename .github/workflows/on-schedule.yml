@@ -8,5 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print python version
-        run: python --version
-        
+        run: python --version        
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Running builder.py
+        run: python ./src/builder.py
+      
