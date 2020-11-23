@@ -1,0 +1,16 @@
+name: on-commit
+
+on:
+  push:
+    branches:
+    - develop
+
+
+jobs:
+  python-version:
+    name: example
+    runs-on: ubuntu-latest
+    steps:
+      - name: Running example
+        run: |
+          python --version
