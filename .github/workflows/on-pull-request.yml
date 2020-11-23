@@ -9,5 +9,11 @@ jobs:
   action:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: commitlint
+        uses: wagoid/commitlint-github-action@v2
       - name: print python version
         run: python --version
