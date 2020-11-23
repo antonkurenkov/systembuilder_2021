@@ -14,13 +14,15 @@ class Parser:
         self.commit_message = None
         self.commit_id = None
         self.file = None
+        # group chat id
+        self.chat_id = -414189807
 
     def get_current_branch(self):
         # get current branch's name
         # get the author of the last commit
         # get commit message
-        subprocess.run(['git', 'clone', '--bare', 'https://github.com/antonkurenkov/systembuilder_2021.git', 'tmdir'],
-                       stdout=subprocess.PIPE)
+        # subprocess.run(['git', 'clone', '--bare', 'https://github.com/antonkurenkov/systembuilder_2021.git', 'tmdir'],
+        #               stdout=subprocess.PIPE)
 
         self.current_branch = subprocess.run(['git', 'branch', '--show-current'], cwd='tmdir/', stdout=subprocess.PIPE)\
             .stdout.decode("utf-8").strip('\n')
@@ -35,9 +37,12 @@ class Parser:
         return (self.current_branch, self.author_name, self.commit_message)
 
     def get_status(self):
-        self.file = requests.get('https://raw.githubusercontent.com/antonkurenkov/systembuilder_2021/'
-                            f'{self.current_branch}/status.json')
-        return self.file.json()
+        try:
+            self.file = requests.get('https://raw.githubusercontent.com/antonkurenkov/systembuilder_2021/'
+                                f'{self.current_branch}/status.json')
+            return self.file.json()
+        except Exception as e:
+            bot.send_message(self.chat_id, e)
 
 
 class Notifier(Parser):
@@ -45,8 +50,6 @@ class Notifier(Parser):
     def __init__(self):
         super().__init__()
         self.final_string = None
-        # test chat id
-        self.chat_id = -409732306
 
     def prepare(self):
         self.final_string = f"""{self.commit_id}\n{self.author_name}\n{self.commit_message.strip()}"""
