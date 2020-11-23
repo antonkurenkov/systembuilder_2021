@@ -1,18 +1,15 @@
-name: On-commit
+name: on-commit
 
 on:
   push:
     branches:
-      - feat/ci-on-commit
       - develop
-      - feat/ci-builder
+
 jobs:
-  python-vers:
+  python-version:
+    name: example
     runs-on: ubuntu-latest
     steps:
-      - name: Running script on python
-        run: |
-          python --version
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
