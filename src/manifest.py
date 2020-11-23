@@ -1,7 +1,8 @@
 import yaml
 
-
 class Manifest:
+    def __init__ (self, path):
+        self.path = path
 
     cfg_keys = ['name', 'description', 'author', 'url',
                 'version', 'license', 'keywords', 'path']
