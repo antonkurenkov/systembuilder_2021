@@ -25,14 +25,14 @@ class Parser:
         # subprocess.run(['git', 'clone', '--bare', 'https://github.com/antonkurenkov/systembuilder_2021.git', 'tmdir'],
         #               stdout=subprocess.PIPE)
 
-        self.current_branch = subprocess.run(['git', 'branch', '--show-current'], cwd='tmdir/', stdout=subprocess.PIPE)\
+        self.current_branch = subprocess.run(['git', 'branch', '--show-current'], stdout=subprocess.PIPE)\
             .stdout.decode("utf-8").strip('\n')
 
-        info = subprocess.run(['git', 'log', '-1', '--pretty=format:"%an - %s"'], cwd='tmdir/', stdout=subprocess.PIPE)\
+        info = subprocess.run(['git', 'log', '-1', '--pretty=format:"%an - %s"'], stdout=subprocess.PIPE)\
             .stdout.decode("utf-8")
         self.author_name, self.commit_message = info.strip('"').split('-')
 
-        self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], cwd='tmdir/', stdout=subprocess.PIPE) \
+        self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], stdout=subprocess.PIPE) \
             .stdout.decode("utf-8").split()[0]
 
         return (self.current_branch, self.author_name, self.commit_message)
