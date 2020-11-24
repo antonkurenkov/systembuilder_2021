@@ -35,7 +35,7 @@ class Parser:
         self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], stdout=subprocess.PIPE) \
             .stdout.decode("utf-8").split()[0]
 
-        return (self.current_branch, self.author_name, self.commit_message)
+        return self.current_branch, self.author_name, self.commit_message
 
     def get_status(self):
         try:
