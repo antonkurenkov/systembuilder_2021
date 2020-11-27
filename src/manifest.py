@@ -1,20 +1,21 @@
 import yaml
 
+
 class Manifest:
-    def __init__ (self, path):
+    def __init__(self, path):
         self.path = path
         self.structure
         self.cfg_keys = ['name', 'description', 'author', 'url',
-                'version', 'license', 'keywords', 'path']
+                         'version', 'license', 'keywords', 'path']
 
     def parse(self):
-        load_file()
-        result = validate()
+        self.load_file()
+        result = self.validate()
         if (result):
             return self.structure
         else:
             return None
-            
+
     def load_file(self):
         with open(self.path, 'r') as stream:
             try:
