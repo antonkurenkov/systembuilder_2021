@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feat/ci-notify
 
 jobs:
   python-version:
@@ -16,3 +17,5 @@ jobs:
           python-version: '3.x'
       - name: Running builder.py
         run: python ./src/builder.py
+      - name: Running bot.py
+        run: python ./chore/bot.py
