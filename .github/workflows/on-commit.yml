@@ -16,5 +16,5 @@ jobs:
           python-version: '3.x'
       - name: Running builder.py
         run: python ./src/builder.py
-      - name: Running bot.py
-        run: python ./chore/bot.py
+      - name: Running notifier.py
+        run: python ./chore/notifier.py
