@@ -6,7 +6,6 @@ on:
       - feat/chore-update-status
 jobs:
   build:
-    runs-on: ubuntu-latest
     name: Commit status
     if: "!startsWith(github.event.head_commit.message, 'chore')"
     runs-on: ubuntu-latest
