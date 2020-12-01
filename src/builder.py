@@ -1,13 +1,13 @@
 import subprocess
 import os.path
 
-
 class Builder:
 
     def __init__(self, path):
         self.path = path
         self.collection = []
         self.file_name = 'manifest.yml'
+
         self.status_map = None
 
     def parse(self):
@@ -26,6 +26,4 @@ class Builder:
             subprocess.run(['docker', 'buildx', 'build', self.path])
         except Exception as error:
             return error
-
-
-
+          
