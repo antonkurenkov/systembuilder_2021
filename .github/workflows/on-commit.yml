@@ -3,7 +3,7 @@ name: on-commit
 on:
   push:
     branches:
-      - develop
+      - feat/chore-update-status
 jobs:
   build:
     name: Commit status
