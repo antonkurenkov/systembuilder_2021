@@ -3,6 +3,7 @@ import subprocess
 import requests
 import telebot
 
+# do not forget to add token to the environment variables
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
@@ -35,12 +36,13 @@ class Parser:
         self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], stdout=subprocess.PIPE) \
             .stdout.decode("utf-8").split()[0]
 
-        return self.current_branch, self.author_name, self.commit_message
+        return self.current_branch, self.author_name, self.commit_message, self.commit_id
 
     def get_status(self):
         try:
+            info = self.get_current_branch()
             self.file = requests.get('https://raw.githubusercontent.com/antonkurenkov/systembuilder_2021/'
-                                f'{self.current_branch}/status.json')
+                                f'{info[0]}/status.json')
             return self.file.json()
         except Exception as e:
             bot.send_message(self.chat_id, e)
@@ -53,14 +55,15 @@ class Notifier(Parser):
         self.final_string = None
 
     def prepare(self):
-        self.final_string = f"""{self.commit_id}\n{self.author_name}\n{self.commit_message.strip()}"""
+        info = self.get_current_branch()
+        self.final_string = f"""{info[3]}\n{info[1]}\n{info[2].strip()}"""
         return self.final_string
 
     def send_message(self):
-        bot.send_message(self.chat_id, self.final_string)
+        final_string = self.prepare()
+        bot.send_message(self.chat_id, final_string)
 
 
 # instance = Notifier()
-# instance.get_current_branch()
-# instance.prepare()
 # instance.send_message()
+
