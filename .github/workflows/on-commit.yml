@@ -23,8 +23,8 @@ jobs:
         with:
           repository: antonkurenkov/systembuilder
           token: ${{ secrets.DEV_BOT_TOKEN }}
-      - name: Running builder.py
-        run: python3 systembuilder_2021/src/builder.py
+      - name: Builder
+        run: python3 builder.py
       # - name: chore update status
       #   run: |
       #     git config --local user.email "aka1306@gmail.com"
