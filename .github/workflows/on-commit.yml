@@ -23,7 +23,7 @@ jobs:
           token: ${{ secrets.DEV_BOT_TOKEN }}
       - name: Running builder.py
         run: |
-         cd /src
+         cd src
          python3 builder.py
       # - name: chore update status
       #   run: |
