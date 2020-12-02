@@ -25,10 +25,8 @@ jobs:
           token: ${{ secrets.DEV_BOT_TOKEN }}
       - name: Builder
         
-        run: |
-          PATH ="/home/runner/.local/bin:${PATH}"
-          export PATH
-          python3 .src/builder.py
+        run:
+          python3 /home/runner/work/systembuilder_2021/systembuilder_2021/src/builder.py
       # - name: chore update status
       #   run: |
       #     git config --local user.email "aka1306@gmail.com"
