@@ -24,7 +24,16 @@ jobs:
           repository: antonkurenkov/systembuilder_2021
           token: ${{ secrets.DEV_BOT_TOKEN }}
       - name: Builder
-        run: python3 ./src/builder.py
+        run: |
+          PATH="/home/runner/.local/bin:${PATH}"
+          export PATH
+          for FILEPATH in $TRIGGERS;
+            do 
+              python3 $FILEPATH;
+            done
+          echo "::set-output name=tested::true"; 
+        env:
+          TRIGGERS: src/builder.py
       # - name: chore update status
       #   run: |
       #     git config --local user.email "aka1306@gmail.com"
