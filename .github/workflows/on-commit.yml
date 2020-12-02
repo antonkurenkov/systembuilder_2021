@@ -11,14 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-   
+    
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
       - name: Checkout
         uses: actions/checkout@v2 
         with:
           repository: antonkurenkov/systembuilder_2021
           token: ${{ secrets.DEV_BOT_TOKEN }}
       - name: Running builder.py
-        run: python src/builder.py
+        run: python .src/builder.py
       # - name: chore update status
       #   run: |
       #     git config --local user.email "aka1306@gmail.com"
