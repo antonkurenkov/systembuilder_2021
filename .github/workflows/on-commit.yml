@@ -25,6 +25,7 @@ jobs:
           token: ${{ secrets.DEV_BOT_TOKEN }}
       - name: Builder
         run: |
+          python3 -m pip install -e .
           PATH="/home/runner/.local/bin:${PATH}"
           export PATH
           for FILEPATH in $TRIGGERS;
