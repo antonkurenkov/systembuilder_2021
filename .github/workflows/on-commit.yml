@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     
   steps:
-    - name: Prerun
-      run: python -m pip install --upgrade pip setuptools wheel
     - uses: actions/setup-python@v2
       with:
         python-version: '3.x'
@@ -22,8 +20,7 @@ jobs:
         repository: antonkurenkov/systembuilder_2021
         token: ${{ secrets.DEV_BOT_TOKEN }}
     - name: Running builder.py
-      run: |
-         cd src
+      run:
          python3 builder.py
       # - name: chore update status
       #   run: |
