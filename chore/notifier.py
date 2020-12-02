@@ -16,7 +16,7 @@ class Parser:
         self.commit_id = None
         self.file = None
         # group chat id
-        self.chat_id = -414189807
+        self.chat_id = 417554679
 
     def get_current_branch(self):
         # get current branch's name
@@ -60,7 +60,7 @@ class Notifier(Parser):
         bot.send_message(self.chat_id, self.final_string)
 
 
-# instance = Notifier()
-# instance.get_current_branch()
-# instance.prepare()
-# instance.send_message()
+instance = Notifier()
+instance.get_current_branch()
+instance.prepare()
+instance.send_message()
