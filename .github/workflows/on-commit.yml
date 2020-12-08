@@ -28,3 +28,10 @@ jobs:
           git config --local user.name "dev-bot0"
           git add status.json 
           git commit -am 'chore: update status'
+      - name: Push status
+        uses: ad-m/github-push-action@master
+        with: 
+          github_token: ${{ secrets.DEV_BOT_TOKEN }}
+          repository: antonkurenkov/systembuilder_2021
+          branch: develop
+          force: true
