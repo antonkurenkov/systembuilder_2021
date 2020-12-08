@@ -3,7 +3,8 @@ import subprocess
 import requests
 import telebot
 
-# don't forget to add token to the environment variables
+# do not forget to add token to the environment variables
+
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
