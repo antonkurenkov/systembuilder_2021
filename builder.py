@@ -8,7 +8,7 @@ class Builder:
 
     def __init__(self, path):
         self.path = path
-        self.collection = ["status.json"]
+        self.collection = []
         self.file_name = 'manifest.yml'
         self.status_map = {}
 
