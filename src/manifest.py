@@ -1,31 +1,40 @@
 import yaml
 
+
 class Manifest:
-    def __init__ (self, path):
-        self.path = path
-
-    cfg_keys = ['name', 'description', 'author', 'url',
-                'version', 'license', 'keywords', 'path']
-
     def __init__(self, path):
         self.path = path
+        self.cfg_keys = ['name', 'description', 'author', 'url',
+                         'version', 'license', 'keywords', 'path']
 
     def parse(self):
-        pass
+        structure = self.load_file()
+        return self.validate(structure)
 
-    def load_file(self, file):
-        return yaml.safe_load(file)
+    def load_file(self):
+        try:
+            with open(self.path) as f_obj:
+                data = yaml.safe_load(f_obj)
+        except FileNotFoundError:
+            print("Не удается найти указанный файл")
+            return None
+        except Exception as e:
+            print(e)
+        else:
+            return data
 
-    def validate(self):
-        with open(self.path, 'r') as stream:
+    def validate(self, data):
+        if data:
             try:
-                data = self.load_file(stream)
-                for key in data.keys():
+                dict_data = dict(data)
+                for key in dict_data.keys():
                     if key not in self.cfg_keys:
                         del data[key]
                 if len(data) == len(self.cfg_keys):
                     return data
                 else:
                     return None
-            except yaml.YAMLError as ex:
-                print(ex)
+            except Exception as e:
+                print(e)
+        else:
+            return None 
