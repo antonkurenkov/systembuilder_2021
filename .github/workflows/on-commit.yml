@@ -27,7 +27,6 @@ jobs:
 
       - name: Moving into bot-cloned folder
         run: |
-          ls
           cd repo
           ls
 
