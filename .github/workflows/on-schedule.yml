@@ -1,20 +1,18 @@
-name: on-commit
-
+name: scheduler
 on:
-  push:
-    branches:
-      - develop
-
+  schedule:
+    - cron: '*/10 * * * *'
+      
 jobs:
-  python-version:
-    name: example
+  schedule_action:
     runs-on: ubuntu-latest
     steps:
+      - name: Print python version
+        run: python --version        
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
       - name: Running builder.py
         run: python ./src/builder.py
-      - name: Running notifier.py
-        run: python ./chore/notifier.py
+      
