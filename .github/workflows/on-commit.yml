@@ -26,7 +26,10 @@ jobs:
           path: repo
 
       - name: Moving into bot-cloned folder
-        run: cd repo
+        run: |
+          ls
+          cd repo
+          ls
 
       - name: Installing dependencies
         run: |
