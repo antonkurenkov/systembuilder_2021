@@ -3,7 +3,7 @@ name: on-commit
 on:
   push:
     branches:
-      - develop
+      - ref/builder
 jobs:
   build:
     name: Commit status
@@ -33,7 +33,7 @@ jobs:
         with: 
           github_token: ${{ secrets.DEV_BOT_TOKEN }}
           repository: antonkurenkov/systembuilder_2021
-          branch: develop
+          branch: ref/builder
           force: true
       - name: Running notifier.py
         run: python ./chore/notifier.py
