@@ -11,23 +11,35 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+
       - name: Setup Python 3
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
       - name: Cloning the repo as dev-bot
         uses: actions/checkout@v2 
         with:
           repository: antonkurenkov/systembuilder_2021
           token: ${{ secrets.DEV_BOT_TOKEN }}
+
+      - name: Installing dependencies
+        run: |
+          apt-get -y update
+          apt-get -y upgrade
+          python -m pip install --upgrade pip setuptools wheel testresources
+          python -m pip install -r requirements.txt
+
       - name: Building projects
         run: python ./src/builder.py
+
       - name: Committing updated status map
         run: |
           git config --local user.email "aka1306@gmail.com"
           git config --local user.name "dev-bot0"
           git add status.json 
           git commit -am 'chore: update status'
+
       - name: Pushing updated status map
         uses: ad-m/github-push-action@master
         with: 
@@ -35,5 +47,6 @@ jobs:
           repository: antonkurenkov/systembuilder_2021
           branch: ref/builder
           force: true
+
       - name: Sending message to telegram chat
         run: python ./chore/notifier.py
