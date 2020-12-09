@@ -12,4 +12,5 @@ version 1.0
 ## Пример
 ## Контакты
 vladimirbruho@gmail.com
+## Стутус проекта
 <br><img src="https://github.com/Voolodimer/systembuilder_2021/workflows/Commit-Action/badge.svg"><br>
