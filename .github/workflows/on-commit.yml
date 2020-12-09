@@ -22,6 +22,7 @@ jobs:
         with:
           repository: antonkurenkov/systembuilder_2021
           token: ${{ secrets.DEV_BOT_TOKEN }}
+          branch: ref/builder
           path: repo
 
       - name: Moving into bot-cloned folder
