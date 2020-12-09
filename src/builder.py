@@ -73,7 +73,7 @@ class Builder:
 
                 print(f'BUILDING {data["name"]}')
                 os.chdir(project_dir)
-                subprocess.run(['docker', 'buildx', 'build', project_map['path']])
+                subprocess.check_call(['docker', 'buildx', 'build', project_map['path']])
                 os.chdir(default_work_dir)
 
                 data['status'] = True
@@ -116,7 +116,7 @@ class Builder:
 
 
 
-collection_path = '/home/antonkurenkov/Proj/systembuilder_2021/collection/'
+collection_path = '/Users/antonkurenkov/Proj/systembuilder_2021/collection/'
 b = Builder(collection_path)
 b.parse()  # get the collection
 b.build()  # build element
