@@ -37,4 +37,4 @@ class Manifest:
             except Exception as e:
                 print(e)
         else:
-            return None 
+            return None
