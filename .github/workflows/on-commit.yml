@@ -37,8 +37,10 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Building projects
-        # run: python src/builder.py
-        run: pwd && ls
+        run: |
+          cd repo
+          python src/builder.py
+        # run: pwd && ls
 
       - name: Committing updated status map
         run: |
