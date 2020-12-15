@@ -116,7 +116,7 @@ class Builder:
 
 
 
-collection_path = '/Users/antonkurenkov/Proj/systembuilder_2021/collection/'
+collection_path = '/home/runner/work/systembuilder_2021/systembuilder_2021/repo/collection/'
 b = Builder(collection_path)
 b.parse()  # get the collection
 b.build()  # build element
