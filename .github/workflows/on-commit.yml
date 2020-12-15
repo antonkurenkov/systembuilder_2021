@@ -49,8 +49,11 @@ jobs:
         with:
           github_token: ${{ secrets.DEV_BOT_TOKEN }}
           repository: antonkurenkov/systembuilder_2021
-          branch: ref/builder
+          branch: ${{ github.ref }}
           force: true
+          directory: repo
 
       - name: Sending message to telegram chat
-        run: python ./chore/notifier.py
+        run: |
+          cd repo
+          python chore/notifier.py
