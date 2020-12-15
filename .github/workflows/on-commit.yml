@@ -9,6 +9,8 @@ jobs:
     name: Single Job
     if: "!startsWith(github.event.head_commit.message, 'chore')"
     runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     
     steps:
 
