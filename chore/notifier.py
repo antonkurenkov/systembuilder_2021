@@ -3,7 +3,8 @@ import subprocess
 import requests
 import telebot
 
-# don't forget to add token to the environment variables
+# do not forget to add token to the environment variables
+
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
@@ -16,8 +17,10 @@ class Parser:
         self.commit_message = None
         self.commit_id = None
         self.file = None
-        # group chat id
-        self.chat_id = 417554679
+        self.author_branch = None
+
+        self.chat_id = -414189807  # group
+        # self.chat_id = 417554679  # anton
 
     def get_current_branch(self):
         # get current branch's name
@@ -29,14 +32,14 @@ class Parser:
         self.current_branch = subprocess.run(['git', 'branch', '--show-current'], stdout=subprocess.PIPE)\
             .stdout.decode("utf-8").strip('\n')
 
-        info = subprocess.run(['git', 'log', '-1', '--pretty=format:"%an - %s"'], stdout=subprocess.PIPE)\
-            .stdout.decode("utf-8")
-        self.author_name, self.commit_message = info.strip('"').split('-')
+        info = subprocess.run(['git', 'log', '-2', '--pretty=format:"%an - %s - %D"'], stdout=subprocess.PIPE)\
+            .stdout.decode("utf-8").split('\n')[-1]
+        self.author_name, self.commit_message, self.author_branch = info.strip('"').split('-')
 
         self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], stdout=subprocess.PIPE) \
             .stdout.decode("utf-8").split()[0]
 
-        return self.current_branch, self.author_name, self.commit_message, self.commit_id
+        return self.current_branch, self.author_name, self.commit_message, self.commit_id, self.author_branch
 
     def get_status(self):
         try:
@@ -56,7 +59,8 @@ class Notifier(Parser):
 
     def prepare(self):
         info = self.get_current_branch()
-        self.final_string = f"""{info[3]}\n{info[1]}\n{info[2].strip()}"""
+        self.final_string = f"""Commit id: {info[3]}\nAuthor: {info[1]}\nCommit text: {info[2].strip()}
+                            \nBranch:{info[4].strip()}"""
         return self.final_string
 
     def send_message(self):
@@ -65,6 +69,4 @@ class Notifier(Parser):
 
 
 instance = Notifier()
-instance.get_current_branch()
-instance.prepare()
 instance.send_message()
