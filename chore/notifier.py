@@ -67,6 +67,13 @@ class Notifier(Parser):
         final_string = self.prepare()
         bot.send_message(self.chat_id, final_string)
 
+        build_status = self.get_status()
+
+        for _, value in build_status.items():
+            for key, value1 in value.items():
+                bot.send_message(self.chat_id, f"{key}, status={value1['status']}, "
+                                               f"message={value1['message']}")
+
 
 instance = Notifier()
 instance.send_message()
