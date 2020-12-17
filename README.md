@@ -1,4 +1,5 @@
 # systembuilder_2021
+version: 0.9
 CI wrapper over github actions. Lanit-Tercom student projects 2021.
 ## Описание проекта CI/CD
 CI/CD — это комбинация непрерывной интеграции (Continuous Itegration) и непрерывной доставки (Continuous Delivery).
