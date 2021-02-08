@@ -1,0 +1,26 @@
+name: on-pull-request
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - feat/ci-builder
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: commitlint
+        uses: wagoid/commitlint-github-action@v2
+      - name: print python version
+        run: python --version
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Running builder.py
+        run: python ./src/builder.py
