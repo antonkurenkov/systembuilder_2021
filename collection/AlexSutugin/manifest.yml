@@ -1,0 +1,8 @@
+name: test
+description: for test
+author: alex
+url: lanit-tercom.ru
+version: 0.1
+license: apache 2.0
+keywords: [develop, build]
+path: "."
