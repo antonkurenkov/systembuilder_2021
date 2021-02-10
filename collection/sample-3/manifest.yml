@@ -1,0 +1,8 @@
+name: centos shell project
+description: winter
+author: lanit
+url: lanit-tercom.ru
+version: 1.0
+license: apache 2.0
+keywords: [centos]
+path: "." 

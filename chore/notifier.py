@@ -17,8 +17,9 @@ class Parser:
         self.commit_message = None
         self.commit_id = None
         self.file = None
-        # group chat id
-        self.chat_id = 417554679
+
+        self.chat_id = -414189807  # group
+        # self.chat_id = 417554679  # anton
 
     def get_current_branch(self):
         # get current branch's name
@@ -30,8 +31,8 @@ class Parser:
         self.current_branch = subprocess.run(['git', 'branch', '--show-current'], stdout=subprocess.PIPE)\
             .stdout.decode("utf-8").strip('\n')
 
-        info = subprocess.run(['git', 'log', '-1', '--pretty=format:"%an - %s"'], stdout=subprocess.PIPE)\
-            .stdout.decode("utf-8")
+        info = subprocess.run(['git', 'log', '-2', '--pretty=format:"%an - %s"'], stdout=subprocess.PIPE)\
+            .stdout.decode("utf-8").split('\n')[-1]
         self.author_name, self.commit_message = info.strip('"').split('-')
 
         self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], stdout=subprocess.PIPE) \
