@@ -3,7 +3,7 @@ name: on-commit
 on:
   push:
     branches:
-      - ref/builder
+      - main
 jobs:
   build:
     name: Single Job
@@ -22,7 +22,7 @@ jobs:
       - name: Cloning the repo as dev-bot
         uses: actions/checkout@v2 
         with:
-          repository: antonkurenkov/systembuilder_2021
+          repository: olexsahka/systembuilder_2021
           token: ${{ secrets.DEV_BOT_TOKEN }}
           path: repo
 
@@ -50,8 +50,8 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.DEV_BOT_TOKEN }}
-          repository: antonkurenkov/systembuilder_2021
-          branch: ${{ github.ref }}
+          repository: olexsahka/systembuilder_2021
+          branch: ${{ github.main }}
           force: true
           directory: repo
 
