@@ -1,0 +1,61 @@
+name: on-commit
+
+on:
+  push:
+    branches:
+      - ref/builder
+jobs:
+  build:
+    name: Single Job
+    if: "!startsWith(github.event.head_commit.message, 'chore')"
+    runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    
+    steps:
+
+      - name: Setup Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Cloning the repo as dev-bot
+        uses: actions/checkout@v2 
+        with:
+          repository: antonkurenkov/systembuilder_2021
+          token: ${{ secrets.DEV_BOT_TOKEN }}
+          path: repo
+
+      - name: Installing dependencies
+        run: |
+          cd repo
+          sudo apt-get -y update
+          python -m pip install --upgrade pip setuptools wheel testresources
+          python -m pip install -r requirements.txt
+
+      - name: Building projects
+        run: |
+          cd repo
+          python src/builder.py
+
+      - name: Committing updated status map
+        run: |
+          cd repo
+          git config --local user.email "aka1306@gmail.com"
+          git config --local user.name "dev-bot0"
+          git add status.json
+          git commit -am 'chore: update status'
+
+      - name: Pushing updated status map
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.DEV_BOT_TOKEN }}
+          repository: antonkurenkov/systembuilder_2021
+          branch: ${{ github.ref }}
+          force: true
+          directory: repo
+
+      - name: Sending message to telegram chat
+        run: |
+          cd repo
+          python chore/notifier.py
