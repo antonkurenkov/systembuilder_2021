@@ -1,3 +1,8 @@
+asgiref==3.3.1
+Django==3.1.7
+python-dotenv==0.15.0
+pytz==2021.1
+sqlparse==0.4.1
 requests==2.25.0
 pyTelegramBotAPI==3.7.4
 pyYAML
