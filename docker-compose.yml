@@ -10,7 +10,9 @@ services:
       - "5432:5432"
 
   web:
-    build: .
+    build:
+      context: ./
+      dockerfile: Dockerfile
     env_file: .env
     volumes:
       - ./:/usr/src/app
