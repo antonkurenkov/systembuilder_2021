@@ -1,72 +1,56 @@
 import os
-import subprocess
 import requests
-import telebot
+import subprocess
 
-# do not forget to add token to the environment variables
+import telebot
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-bot = telebot.TeleBot(TOKEN)
 
 
 class Parser:
 
     def __init__(self):
-        self.current_branch = None
-        self.author_name = None
-        self.commit_message = None
-        self.commit_id = None
-        self.file = None
+        self.url = 'https://raw.githubusercontent.com/antonkurenkov/systembuilder_2021/develop/status.json'
 
+    def parse(self):
+        return requests.get(self.url).json()
+
+
+class Notifier:
+
+    def __init__(self, data):
+        # self.chat_id = 444591160  # daniil
         self.chat_id = -414189807  # group
-        # self.chat_id = 417554679  # anton
-
-    def get_current_branch(self):
-        # get current branch's name
-        # get the author of the last commit
-        # get commit message
-        # subprocess.run(['git', 'clone', '--bare', 'https://github.com/antonkurenkov/systembuilder_2021.git', 'tmdir'],
-        #               stdout=subprocess.PIPE)
-
-        self.current_branch = subprocess.run(['git', 'branch', '--show-current'], stdout=subprocess.PIPE)\
-            .stdout.decode("utf-8").strip('\n')
-
-        info = subprocess.run(['git', 'log', '-2', '--pretty=format:"%an - %s"'], stdout=subprocess.PIPE)\
-            .stdout.decode("utf-8").split('\n')[-1]
-        self.author_name, self.commit_message = info.strip('"').split('-')
-
-        self.commit_id = subprocess.run(['git', 'log', '-1', '--pretty=oneline'], stdout=subprocess.PIPE) \
-            .stdout.decode("utf-8").split()[0]
-
-        return self.current_branch, self.author_name, self.commit_message, self.commit_id
-
-    def get_status(self):
-        try:
-            info = self.get_current_branch()
-            self.file = requests.get('https://raw.githubusercontent.com/antonkurenkov/systembuilder_2021/'
-                                f'{info[0]}/status.json')
-            return self.file.json()
-        except Exception as e:
-            bot.send_message(self.chat_id, e)
-
-
-class Notifier(Parser):
-
-    def __init__(self):
-        super().__init__()
-        self.final_string = None
+        self.data = list(data.values())[0]
+        self.datetime = list(data.keys())[0]
+        self.bot = telebot.TeleBot(TOKEN)
 
     def prepare(self):
-        info = self.get_current_branch()
-        self.final_string = f"""{info[3]}\n{info[1]}\n{info[2].strip()}"""
-        return self.final_string
+        author = subprocess.Popen(['git', 'log', '-2', '--pretty=%an'],
+                                  stdout=subprocess.PIPE).communicate()[0].decode('utf-8').strip().split()[-1]
+        commit_message = subprocess.Popen(['git', 'log', '-2', '--pretty=%s'],
+                                          stdout=subprocess.PIPE).communicate()[0].decode('utf-8').strip(). \
+            split('\n')[-1]
+        commit_id = subprocess.Popen(['git', 'log', '-2', '--pretty=%h'],
+                                     stdout=subprocess.PIPE).communicate()[0].decode('utf-8').strip().split()[-1]
 
-    def send_message(self):
-        final_string = self.prepare()
-        bot.send_message(self.chat_id, final_string)
+        message = f'Author: {author}\nCommit ID: {commit_id}\nMessage: {commit_message}\n\n'
+
+        for key, value in self.data.items():
+            message += f"Образ: {key}\nРезультат сборки: {'Успешно' if value['status'] else value['message']}" \
+                       f"\nВерсия релиза: {value['builder_release']}\nДата сборки: {self.datetime}\n\n"
+        return message
+
+    def send(self):
+        message = self.prepare()
+        self.bot.send_message(self.chat_id, message, parse_mode='html')
 
 
-instance = Notifier()
-instance.get_current_branch()
-instance.prepare()
-instance.send_message()
+if __name__ == "__main__":
+    parser = Parser()
+    status = parser.parse()
+    notifier = Notifier(status)
+    notifier.send()
