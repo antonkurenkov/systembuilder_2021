@@ -26,8 +26,8 @@ class Parser:
 class Notifier:
 
     def __init__(self, data):
-        self.chat_id = 444591160  # daniil
-        # self.chat_id = -414189807  # group
+        # self.chat_id = 444591160  # daniil
+        self.chat_id = -414189807  # group
         self.data = list(data.values())[0]
         self.datetime = list(data.keys())[0]
         self.bot = telebot.TeleBot(TOKEN)
@@ -41,6 +41,7 @@ class Notifier:
             session.commit_session()
         except Exception as error:
             print(error)
+        session.close_session()
 
     def prepare(self):
         data_to_load = {}
