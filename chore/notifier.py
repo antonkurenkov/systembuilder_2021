@@ -1,12 +1,16 @@
 import os
 import subprocess
 
+import sys
+
+sys.path.append('/usr/src/app')
+
 import requests
 import telebot
 from dotenv import load_dotenv
 
-from hooks import init_db
-from queries.queries import create_new_commit
+from chore.hooks import init_db
+from chore.queries.queries import create_new_commit
 
 
 load_dotenv()
@@ -26,8 +30,8 @@ class Parser:
 class Notifier:
 
     def __init__(self, data):
-        # self.chat_id = 444591160  # daniil
-        self.chat_id = -414189807  # group
+        self.chat_id = 444591160  # daniil
+        # self.chat_id = -414189807  # group
         self.data = list(data.values())[0]
         self.datetime = list(data.keys())[0]
         self.bot = telebot.TeleBot(TOKEN)

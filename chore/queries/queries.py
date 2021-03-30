@@ -1,5 +1,5 @@
-from models.commits_info import DBAssemblyInformation
-from database import DBSession
+from chore.models.commits_info import DBAssemblyInformation
+from chore.database import DBSession
 
 
 def create_new_commit(session: DBSession, author, commit_message, commit_id, assembly, date):

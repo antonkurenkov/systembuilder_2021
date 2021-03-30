@@ -7,7 +7,7 @@ from alembic import context
 
 from chore.config import PostgresConfig
 
-from chore.models import BaseModel
+from chore.models.base import BaseModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

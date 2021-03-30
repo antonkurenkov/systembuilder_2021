@@ -1,6 +1,7 @@
 from sqlalchemy.orm import sessionmaker, Session
 
-from models.base import Base, BaseModel
+from chore.models.base import Base, BaseModel
+from chore.models.commits_info import DBAssemblyInformation
 
 
 class DBSession:
@@ -17,6 +18,9 @@ class DBSession:
             self._session.add(model)
         except Exception as error:
             print(error)
+
+    def get_last_current_assembly(self):
+        return self._session.query(DBAssemblyInformation).first()
 
     def close_session(self):
         self._session.close()
