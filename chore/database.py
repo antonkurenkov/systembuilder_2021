@@ -20,7 +20,7 @@ class DBSession:
             print(error)
 
     def get_last_current_assembly(self):
-        return self._session.query(DBAssemblyInformation).first()
+        return self._session.query(DBAssemblyInformation).order_by(DBAssemblyInformation.id.desc()).first()
 
     def close_session(self):
         self._session.close()

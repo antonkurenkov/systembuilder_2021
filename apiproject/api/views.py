@@ -13,6 +13,7 @@ def hello_world(request):
         'author': info.author,
         'commit_message': info.commit_message,
         'commit_id': info.commit_id,
+        'commit_created_at': info.created_at,
         'assembly': info.assembly,
         'date': info.date,
     }
