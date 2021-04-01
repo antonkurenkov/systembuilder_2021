@@ -1,6 +1,6 @@
-import subprocess
-import os.path
 import json
+import os.path
+import subprocess
 import time
 
 from manifest import Manifest

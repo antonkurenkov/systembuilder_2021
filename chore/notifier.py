@@ -1,9 +1,13 @@
 import os
-import requests
 import subprocess
 
+import requests
 import telebot
 from dotenv import load_dotenv
+
+from hooks import init_db
+from queries.queries import create_new_commit
+
 
 load_dotenv()
 
@@ -28,7 +32,19 @@ class Notifier:
         self.datetime = list(data.keys())[0]
         self.bot = telebot.TeleBot(TOKEN)
 
+    @staticmethod
+    def load_in_database(kwargs):
+        database = init_db()
+        session = database.make_session()
+        create_new_commit(session=session, **kwargs)
+        try:
+            session.commit_session()
+        except Exception as error:
+            print(error)
+        session.close_session()
+
     def prepare(self):
+        data_to_load = {}
         author = subprocess.Popen(['git', 'log', '-2', '--pretty=%an'],
                                   stdout=subprocess.PIPE).communicate()[0].decode('utf-8').strip().split()[-1]
         commit_message = subprocess.Popen(['git', 'log', '-2', '--pretty=%s'],
@@ -42,6 +58,15 @@ class Notifier:
         for key, value in self.data.items():
             message += f"Образ: {key}\nРезультат сборки: {'Успешно' if value['status'] else value['message']}" \
                        f"\nВерсия релиза: {value['builder_release']}\nДата сборки: {self.datetime}\n\n"
+
+        data_to_load.update({'author': author, 'commit_message': commit_message, 'commit_id': commit_id,
+                             'assembly': self.data, 'date': self.datetime})
+
+        try:
+            self.load_in_database(data_to_load)
+        except Exception as error:
+            print(error)
+
         return message
 
     def send(self):
