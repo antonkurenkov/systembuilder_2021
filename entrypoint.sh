@@ -5,4 +5,8 @@ python apiproject/manage.py migrate --no-input
 
 python apiproject/manage.py createsuperuser --noinput
 
+alembic upgrade head
+python -c "print('Migrate successfully!')"
+
+python chore/notifier.py
 python apiproject/manage.py runserver 0.0.0.0:8000

@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Single Job
-    if: "!startsWith(github.event.head_commit.message, 'chore')"
+    if: "!startsWith(github.event.head_commit.message, 'chore1')"
     runs-on: ubuntu-latest
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
